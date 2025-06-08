@@ -1,10 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Flip Card</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/style.css">
 </head>
 <body>
-$END$
+<div class="container">
+    <h1>Welcome to FashCard!</h1>
+    <div class="card">
+        <div class="card-inner">
+            <div class="card-front cards">
+                {{index}}
+                <h2>{{ cards[index].front }}</h2>
+                <p>{{ cards[index].back }}</p>
+                <h2>Front Side</h2>
+
+            </div>
+            <div class="card-back hidden">
+                <h2>Back Side</h2>
+                <p>This is the back side of the card.</p>
+            </div>
+        </div>
+    </div>
+    <div class="button_section">
+        <div>
+            <button class="flip-button">Flip Card</button>
+        <button class="next-button">Next Card</button>
+        </div>
+        <div>
+            <button class="add-button">Add Card</button>
+            <button class="delete-button">Delete Card</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>
