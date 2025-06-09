@@ -2,28 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Flip Card</title>
+    <title>FashCard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
+<body data-current-card-id="{{ current_card.id if current_card and current_card.id else '' }}">
 <div class="container">
     <h1>Welcome to FashCard!</h1>
+
     <div class="card">
         <div class="card-inner">
             <div class="card-front cards">
-                <h2>{{ cards[0].front }}</h2>
-
+                {% if current_card %}
+                    <h2>{{ current_card.front }}</h2>
+                {% else %}
+                    <h2>No cards yet!</h2>
+                {% endif %}
             </div>
             <div class="card-back hidden">
-               <p>{{ cards[0].back }}</p>
+                {% if current_card %}
+                    <p>{{ current_card.back }}</p>
+                {% else %}
+                    <p>Add some cards to get started.</p>
+                {% endif %}
             </div>
         </div>
     </div>
+
     <div class="button_section">
         <div>
             <button class="flip-button">Flip Card</button>
-        <button class="next-button">Next Card</button>
+            <button class="next-button">Next Card</button>
         </div>
         <div>
             <button class="add-button">Add Card</button>
@@ -31,17 +40,16 @@
         </div>
     </div>
 
-     <div class="new_form ">
-            <form id="new-card-form">
-                <h2>Add a New Card</h2>
-                <label for="front"></label><input type="text" id="front" placeholder="Front of Card" required>
-                <label for="back"></label><textarea id="back" placeholder="Back of Card" required></textarea>
-                <button type="submit">Add Card</button>
-            </form>
-
-     </div>
+    <div class="new_form">
+        <form id="new-card-form">
+            <h2>Add a New Card</h2>
+            <label for="front"></label><input type="text" id="front" placeholder="Front of Card" required>
+            <label for="back"></label><textarea id="back" placeholder="Back of Card" required></textarea>
+            <button type="submit">Add Card</button>
+        </form>
+    </div>
 
 </div>
-<script src="../static/script.js"></script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

@@ -15,42 +15,102 @@ p {
     line-height: 1.6;
     color: #333;
 }
-.card {
+.container {
+    width: 100%;
+    max-width: 600px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgba(146, 179, 133, 0.75);
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    width: 400px;
-    height: 200px;
+    gap: 20px; /* Space between sections */
+}
 
+.card {
+    /* Removed fixed background-color here as card-front/back will handle it */
+    padding: 0; /* Remove padding as card-front/back have it */
+    margin-bottom: 0; /* Adjusted for container gap */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Slightly stronger shadow */
+    width: 400px; /* Fixed width for card container */
+    height: 200px; /* Fixed height for card container */
+    perspective: 1000px; /* For 3D flip effect */
+    position: relative; /* Needed for absolute positioning of inner elements */
+    background: none; /* No background for the outer card div */
 }
-.hidden {
-    display: none;
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
 }
-.visible {
-    display: block;
+
+.card-inner.flipped {
+    transform: rotateY(180deg);
 }
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; /* Hide the back of the element when it's facing away from the user */
+    display: flex;
+    flex-direction: column; /* To center text vertically */
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff; /* Default background */
+    color: #333;
+    font-size: 1.5em;
+    padding: 20px;
+    box-sizing: border-box; /* Include padding in the element's total width and height */
+    word-wrap: break-word; /* Ensure long words break */
+    overflow-wrap: break-word; /* Ensure long words break */
+}
+/* Specific styles for front and back for differentiation */
+.card-front {
+    background-color: #e6ffe6; /* Light green for front */
+    color: #333;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+    background-color: #ccffcc; /* Slightly darker green for back */
+    color: #333;
+}
+
+/* Ensure only one face is visible at a time using display: none for current state management in JS */
+.card-front.hidden, .card-back.hidden {
+    display: none !important; /* Use !important to override flex display from .card-front, .card-back */
+}
+
+
 .button_section {
     display: flex;
-    flex-direction: column;
+    flex-direction: row; /* Changed to row for horizontal arrangement of primary buttons */
     justify-content: center;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 15px; /* Increased gap for better spacing */
     padding: 20px;
     text-align: center;
-    margin-top: 20px;
+    margin-top: 0; /* Adjusted for container gap */
     background-color: #e0e0e0;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     opacity: 0.9;
-
+    width: 100%; /* Take full width of container */
+    box-sizing: border-box;
 }
-.add-button,.flip-button,.next-button {
+
+.button_section > div {
+    display: flex;
+    gap: 15px; /* Gap between buttons within each div */
+}
+
+
+button {
     background-color: #4CAF50;
     color: white;
     padding: 10px 20px;
@@ -58,56 +118,99 @@ p {
     cursor: pointer;
     border-radius: 4px;
     transition: background-color 0.3s ease;
-    width: 150px;
-    height: 50px;
+    min-width: 120px; /* Minimum width for buttons */
+    height: 45px; /* Consistent height */
+    font-size: 1em;
 }
-.add-button:hover,.flip-button:hover,.next-button:hover {
+
+button:hover {
     background-color: #45a049;
 }
+
 .delete-button {
     background-color: #f44336;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-    width: 150px;
-    height: 50px;
-
 }
 .delete-button:hover {
     background-color: #d32f2f;
 }
-form{
+
+.new_form {
+    display: none; /* Hidden by default, shown by JS */
+    margin-top: 0; /* Adjusted for container gap */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    width: 100%; /* Take full width of container */
+    box-sizing: border-box;
+    max-width: 400px; /* Limit width of form */
+}
+
+.new_form.show {
+    display: flex; /* Use flex to align form elements */
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+form {
+    width: 100%; /* Ensure form takes full width within new_form */
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    margin-top: 20px;
+    margin-top: 0;
 }
+
 form input, form textarea {
-    width: 300px;
+    width: calc(100% - 20px); /* Adjust width to account for padding */
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
+    box-sizing: border-box; /* Include padding and border in width */
 }
-form input[type="submit"] {
+
+form button[type="submit"] {
     background-color: #4CAF50;
     color: white;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    width: auto; /* Allow button to size naturally */
+    padding: 10px 30px; /* More padding for submit button */
 }
-.new_form{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    margin-top: 20px;
-    background-color: rgba(146, 179, 133, 0.75);
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card {
+        width: 300px;
+        height: 150px;
+    }
+    .card-front h2, .card-back p {
+        font-size: 1.2em;
+    }
+    .button_section > div {
+        flex-direction: column; /* Stack buttons vertically on smaller screens */
+    }
+    button {
+        width: 100%; /* Full width for buttons on small screens */
+        min-width: unset;
+    }
+    .new_form {
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        width: 90%; /* Even smaller on very small screens */
+        height: 120px;
+    }
+    .card-front h2, .card-back p {
+        font-size: 1em;
+    }
+    .container {
+        padding: 10px;
+    }
 }
