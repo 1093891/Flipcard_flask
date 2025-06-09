@@ -12,15 +12,11 @@
     <div class="card">
         <div class="card-inner">
             <div class="card-front cards">
-                {{index}}
-                <h2>{{ cards[index].front }}</h2>
-                <p>{{ cards[index].back }}</p>
-                <h2>Front Side</h2>
+                <h2>{{ cards[0].front }}</h2>
 
             </div>
             <div class="card-back hidden">
-                <h2>Back Side</h2>
-                <p>This is the back side of the card.</p>
+               <p>{{ cards[0].back }}</p>
             </div>
         </div>
     </div>
@@ -34,6 +30,18 @@
             <button class="delete-button">Delete Card</button>
         </div>
     </div>
+
+     <div class="new_form ">
+            <form id="new-card-form">
+                <h2>Add a New Card</h2>
+                <label for="front"></label><input type="text" id="front" placeholder="Front of Card" required>
+                <label for="back"></label><textarea id="back" placeholder="Back of Card" required></textarea>
+                <button type="submit">Add Card</button>
+            </form>
+
+     </div>
+
 </div>
+<script src="../static/script.js"></script>
 </body>
 </html>

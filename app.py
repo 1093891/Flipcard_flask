@@ -31,12 +31,9 @@ def index():
 @app.route('/add', methods=['POST'])
 def add():
     card_front = request.form['front']
-    new_front = FlipCard(front=card_front)
-    db.session.add(new_front)
-    db.session.commit()
     card_back = request.form['back']
-    new_back = FlipCard(back=card_back)
-    db.session.add(new_back)
+    new_card = FlipCard(card_front=card_front ,back=card_back)
+    db.session.add(new_card)
     db.session.commit()
     return redirect('/')
 
@@ -55,6 +52,9 @@ def next_card(id):
         return redirect('/')
     index = (index + 1) % len(cards)
     return render_template('index.html', cards=cards, current_card=cards[index])
+
+def count_cards(x):
+    return x+1
 
 
 
